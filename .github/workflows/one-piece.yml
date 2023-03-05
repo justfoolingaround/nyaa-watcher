@@ -1,0 +1,28 @@
+name: One Piece
+on:
+  push:
+    branches: [ master ]
+  schedule:
+    - cron: "0 7 * * SUN"
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+
+      - name: Checking out repository content
+        uses: actions/checkout@v2
+
+      - name: Setting up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install requirements
+        run: |
+          pip install --upgrade pip
+          pip install -r "requirements.txt"
+      
+      - name: Run the wife
+        run: |
+          python waifu.py "one piece" -d ${{ secrets.WEEBHOOK_URL }}
